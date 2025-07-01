@@ -1,0 +1,4 @@
+fastmcp
+azure-identity
+azure.mgmt.fabric
+uvicorn

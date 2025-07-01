@@ -416,3 +416,16 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+# .gitignore for Python/FastAPI/FastMCP projects
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.env
+.venv/
+build/
+dist/
+*.egg-info/
+.env.*
+.vscode/
+.idea/
