@@ -31,6 +31,20 @@ class FabricCapacity:
         return None
 
     def _serialize(self, obj):
+        """
+        Recursively serialize an object into a dictionary or list format.
+
+        Parameters:
+            obj (Any): The object to serialize. Can be one of the following types:
+                - dict: Serialized into a dictionary with recursively serialized values.
+                - list or tuple: Serialized into a list with recursively serialized elements.
+                - Object with __dict__: Serialized into a dictionary containing non-private attributes.
+                - Object with to_dict method: Serialized using the object's to_dict method.
+                - Other types: Returned as-is.
+
+        Returns:
+            Any: The serialized representation of the input object.
+        """
         if isinstance(obj, dict):
             return {k: self._serialize(v) for k, v in obj.items()}
         elif isinstance(obj, (list, tuple)):
