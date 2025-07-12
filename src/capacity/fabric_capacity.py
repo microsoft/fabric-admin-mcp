@@ -30,17 +30,29 @@ class FabricCapacity:
                 return None
         return None
 
+    def _serialize(self, obj):
+        if isinstance(obj, dict):
+            return {k: self._serialize(v) for k, v in obj.items()}
+        elif isinstance(obj, (list, tuple)):
+            return [self._serialize(v) for v in obj]
+        elif hasattr(obj, '__dict__'):
+            return {k: self._serialize(v) for k, v in obj.__dict__.items() if not k.startswith('_')}
+        elif hasattr(obj, 'to_dict'):
+            return obj.to_dict()
+        else:
+            return obj
+
     def to_dict(self):
         return {
             "id": self.id,
             "name": self.name,
             "type": self.type,
             "location": self.location,
-            "sku": self.sku,
-            "tags": self.tags,
-            "properties": self.properties,
+            "sku": self._serialize(self.sku),
+            "tags": self._serialize(self.tags),
+            "properties": self._serialize(self.properties),
             "resource_group": self.resource_group,
-            "administrators": self.administrators,
+            "administrators": self._serialize(self.administrators),
             "state": self.state,
             "provisioningState": self.provisioning_state,
             "sku_name": self.sku_name,
