@@ -1,0 +1,18 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.env
+.env.*
+*.db
+*.sqlite3
+*.log
+media/
+# Docker
+*.dockerfile
+Dockerfile
+# VSCode
+.vscode/
+# OS
+.DS_Store
+Thumbs.db

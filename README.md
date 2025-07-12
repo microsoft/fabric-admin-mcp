@@ -40,10 +40,27 @@ This example demonstrates how the MCP tools are exposed and can be accessed for 
    ```sh
    python server.py
    ```
-   The server will start at [http://127.0.0.1:8000/mcp/](http://127.0.0.1:8000/mcp/).
+
+## Running the MCP Server in Docker (locally)
+
+1. **Prepare your environment variables:**
+   - Copy `env.example` to `.env` and fill in your Azure credentials.
+
+2. **Build the Docker image:**
+   ```bash
+   docker build -t fabric-admin-mcp .
+   ```
+
+3. **Run the Docker container:**
+   ```bash
+   docker run --env-file .env -p 8000:8000 fabric-admin-mcp
+   ```
+
+4. **Access the MCP server:**
+   - The server will start at [http://127.0.0.1:8000/mcp/](http://127.0.0.1:8000/mcp/).
 
 4. **Test with VS Code as a Client:**
-   - Open the Command Palette (`Ctrl+Shift+P`), search for "MCP: Connect to Server", and enter `http://127.0.0.1:8000/mcp/`.
+   - Open the Command Palette (`Ctrl+Shift+P`), search for "MCP: Connect to Server", and enter `http://127.0.0.1:8000/mcp/` (change the address if running it remotely).
    - You can now use MCP tools exposed by this server directly from VS Code using Agent Mode.
 
 ## 📦 Requirements
