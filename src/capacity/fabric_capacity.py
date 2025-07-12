@@ -30,17 +30,43 @@ class FabricCapacity:
                 return None
         return None
 
+    def _serialize(self, obj):
+        """
+        Recursively serialize an object into a dictionary or list format.
+
+        Parameters:
+            obj (Any): The object to serialize. Can be one of the following types:
+                - dict: Serialized into a dictionary with recursively serialized values.
+                - list or tuple: Serialized into a list with recursively serialized elements.
+                - Object with __dict__: Serialized into a dictionary containing non-private attributes.
+                - Object with to_dict method: Serialized using the object's to_dict method.
+                - Other types: Returned as-is.
+
+        Returns:
+            Any: The serialized representation of the input object.
+        """
+        if isinstance(obj, dict):
+            return {k: self._serialize(v) for k, v in obj.items()}
+        elif isinstance(obj, (list, tuple)):
+            return [self._serialize(v) for v in obj]
+        elif hasattr(obj, '__dict__'):
+            return {k: self._serialize(v) for k, v in obj.__dict__.items() if not k.startswith('_')}
+        elif hasattr(obj, 'to_dict'):
+            return obj.to_dict()
+        else:
+            return obj
+
     def to_dict(self):
         return {
             "id": self.id,
             "name": self.name,
             "type": self.type,
             "location": self.location,
-            "sku": self.sku,
-            "tags": self.tags,
-            "properties": self.properties,
+            "sku": self._serialize(self.sku),
+            "tags": self._serialize(self.tags),
+            "properties": self._serialize(self.properties),
             "resource_group": self.resource_group,
-            "administrators": self.administrators,
+            "administrators": self._serialize(self.administrators),
             "state": self.state,
             "provisioningState": self.provisioning_state,
             "sku_name": self.sku_name,
